@@ -17,3 +17,19 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-part2:
+    name: Build Part2
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Restore NuGet packages
+        run: nuget restore Part2/Part2.sln
+
+      - name: Build Part2
+        run: msbuild Part2/Part2.sln /p:Configuration=Release   
